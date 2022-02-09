@@ -38,7 +38,6 @@ With this data we want to filter (this is how a api response of the player XXX c
 
         "a_lot_of_stuff": {
         },
-
         "stats": {
             "Bedwars": {
                 "Experience": 12345,
@@ -99,7 +98,7 @@ Results into this:
 ```json
 {
     "XXX": {
-                                            <- the "player" key does not appear because it is unnecessary
+                                <- the "player" key does not appear because it is unnecessary
         "stats": {
             "Bedwars": {
                 "Overall": {
@@ -141,4 +140,4 @@ XXX:
  | 
 ```
 
-For the key names you can have look at ```example_response.json```
+For the key names you can have a look at [```example_response.json```](example_resoponse.json)
