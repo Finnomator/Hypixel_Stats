@@ -2,7 +2,7 @@
 
 This collects all player names of the players who are playing in your Hypixel round (e.g. Bedwars, SkyWars, ...) and collects all their data using the Hyixel api, filters it and prints it into the console.
 
-# This only works for Bedwars yet!
+# <span style="color: #FF0000">This only works for Bedwars yet!</span>
 
 # Usage
 
