@@ -28,23 +28,18 @@ The filter is stored in ```src/filters.json```.
 You change the filter by editing ```src/filters.json``` as described below.  
 
 Looking at an example:  
-With this data we want to filter (how a api response could look like):
+With this data we want to filter (this is how a api response of the player XXX could look like):
 
 ```json
 {
     "success": true,
-    "player":
-    {
-
+    "player": {
         "playername": "XXX",
 
-        "a_lot_of_stuff":
-        {
-            
+        "a_lot_of_stuff": {
         },
 
-        "stats":
-        {
+        "stats": {
             "Bedwars": {
                 "Experience": 12345,
                 "wins_bedwars": 0,
@@ -59,7 +54,6 @@ With this data we want to filter (how a api response could look like):
                     "b"
                 ]
             },
-
             "SkyWars": {
                 "games_played_skywars": 45,
                 "quits": 13,
@@ -103,26 +97,29 @@ And this filter:
 Results into this:
 
 ```json
-{                                      <- the player key does not appear because it is unnecessary
-    "stats": {
-        "Bedwars": {
-            "Overall": {
-                "Experience": 12345,
-                "wins_bedwars": 0,
-                "losses_bedwars": 5,
-                "winstreak": null,              <- null because it is not present in the data with the keys "stats", "Bedwars", "winstreak"
-                "final_kills_bedwars": null,
-                "final_deaths_bedwars": null,
-                "games_played_bedwars": null
+{
+    "XXX": {
+                                            <- the "player" key does not appear because it is unnecessary
+        "stats": {
+            "Bedwars": {
+                "Overall": {
+                    "Experience": 12345,
+                    "wins_bedwars": 0,
+                    "losses_bedwars": 5,
+                    "winstreak": null,              <- null because it is not present in the data with the keys "stats", "Bedwars", "winstreak"
+                    "final_kills_bedwars": null,
+                    "final_deaths_bedwars": null,
+                    "games_played_bedwars": null
+                },
+                "Kills and deaths": {
+                    "kills_bedwars": 20,
+                    "deaths_bedwars": null
+                }
             },
-            "Kills and deaths": {
-                "kills_bedwars": 20,
-                "deaths_bedwars": null
-            }
-        },
-        "SkyWars": {
-            "some_random_name": {
-                "quits": 13
+            "SkyWars": {
+                "some_random_name": {
+                    "quits": 13
+                }
             }
         }
     }
