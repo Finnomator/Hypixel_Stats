@@ -2,6 +2,8 @@
 
 This collects all player names of the players who are playing in your Hypixel round (e.g. Bedwars, SkyWars, ...) and collects all their data using the Hyixel api, filters it and prints it into the console.
 
+# This only works for Bedwars yet!
+
 # Usage
 
 - Run main.py in terminal
@@ -98,7 +100,7 @@ And this filter:
 }
 ```
 
-Results into this output:
+Results into this:
 
 ```json
 {                                      <- the player key does not appear because it is unnecessary
@@ -125,6 +127,21 @@ Results into this output:
         }
     }
 }
+```
+
+And gets transformed into
+
+```text
+XXX:
+ | Overall:                         <- you see only this because it tries to filter the relevant information (based on the game you are playing)
+ |  | Experience: 12345
+ |  | wins_bedwars: 0
+ |  | losses_bedwars: 5
+ |  | winstreak: null
+ |  | final_kills_bedwars: null
+ |  | final_deaths_bedwars: null
+ |  | games_played_bedwars: null
+ | 
 ```
 
 For the key names you can have look at ```example_response.json```

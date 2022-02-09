@@ -12,6 +12,51 @@
                 "deaths_bedwars",
                 "games_played_bedwars"
             ]
+        },
+        "BuildBattle": {
+            "Overall": [
+                "score",
+                "games_played",
+                "wins"
+            ],
+            "Guess the Build": [
+                "wins_guess_the_build",
+                "correct_guesses"
+            ]
+        },
+        "SkyWars": {
+            "Overall": [
+                "games_played_skywars",
+                "win_streak",
+                "wins",
+                "losses",
+                "kills",
+                "deaths"
+            ]
+        },
+        "Duels": {
+            "Overall": [
+                "rounds_played",
+                "wins",
+                "losses",
+                "kills",
+                "deaths"
+            ],
+            "Bridge": [
+                "current_bridge_winstreak",
+                "games_played_duels",
+                "goals",
+                "bridge_kills",
+                "bridge_deaths"
+            ]
+        },
+        "Arcade": {
+            "Pixel Party": [
+                "wins_party"
+            ]
         }
-    }
+    },
+    "Other": [
+        "mostRecentGameType"
+    ]
 }

@@ -7,6 +7,7 @@ import get_stats
 import detect_who
 import setup
 import filter_data
+import extract_for_mode
 import time
 
 players_to_search = []
@@ -39,7 +40,7 @@ def update_infos(data: dict):
 
 def reset_left_requests(stop):
 
-    while not stop:
+    while not stop():
         min_now = datetime.now().minute
 
         if min_now != infos["request"]["last_request"]:
@@ -47,6 +48,15 @@ def reset_left_requests(stop):
                 {"request": {"left_requests": 120, "last_request": min_now}})
 
         time.sleep(1)
+
+
+def pretty_format(data):
+
+    data_formatted = json.dumps(data, indent=4)
+
+    res = data_formatted.replace("{","").replace("}","").replace('"',"").replace(",","").replace("\n    ","\n").replace("    "," | ")
+
+    return res
 
 
 stop_thread = False
@@ -80,7 +90,7 @@ while True:
 
                 try:
                     data = get_stats.get_stats(key=api_key, name=player)
-                    filtered = filter_data.main(data, data_filter, True)
+                    filtered = filter_data.main(data, data_filter, False)
                     filtered_obj.update({player: filtered})
 
                 except get_stats.MojangAPIError:
@@ -91,7 +101,11 @@ while True:
 
                 left_requests -= 1
 
-            print(json.dumps(filtered_obj, indent=4))
+            extracted_obj = extract_for_mode.extract(filtered_obj)
+
+            pretty_res = pretty_format(extracted_obj)
+
+            print(pretty_res)
 
             infos = update_infos(
                 {"request": {"left_requests": left_requests, "last_request": datetime.now().minute}})
