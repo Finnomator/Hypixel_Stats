@@ -56,7 +56,7 @@ t1.start()
 with open("filters.json", "r") as f:
     data_filter = json.load(f)
 
-print("Ready, use /who")
+print("Ready, use /who in game")
 
 while True:
     try:
