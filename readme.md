@@ -129,7 +129,7 @@ Results into this:
 }
 ```
 
-And gets transformed into
+And will be printed as so:
 
 ```text
 XXX:
