@@ -1,0 +1,17 @@
+{
+    "stats": {
+        "Bedwars": {
+            "Overall": [
+                "Experience",
+                "wins_bedwars",
+                "losses_bedwars",
+                "winstreak",
+                "final_kills_bedwars",
+                "final_deaths_bedwars",
+                "kills_bedwars",
+                "deaths_bedwars",
+                "games_played_bedwars"
+            ]
+        }
+    }
+}
