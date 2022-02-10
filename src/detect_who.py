@@ -73,8 +73,11 @@ def extract(line: str, file: TextIOWrapper):
             if ", " in team:
                 team = team.split(", ")
 
-            for t in team:
-                teams.append(t)
+                for t in team:
+                    teams.append(t)
+
+            else:
+                teams.append(team)
 
             team_line = file_data[1 + end_offset - team_c]
 
