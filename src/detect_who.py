@@ -41,7 +41,6 @@ def extract(line: str, file: TextIOWrapper):
         msg = line.split("ONLINE: ")[1]
         players = msg.split(", ")
         
-
     elif "[Client thread/INFO]: [CHAT] Team #1 - " in line:
         time.sleep(0.3)
         file.seek(0)
@@ -67,8 +66,6 @@ def extract(line: str, file: TextIOWrapper):
         while "[Client thread/INFO]: [CHAT] Team #" in team_line:
             team_c += 1
 
-            team_line = file_data[-team_c+end_offset]
-
             print(team_line)
 
             team = team_line.split(" - [")[1].split("]")[0]
@@ -79,8 +76,10 @@ def extract(line: str, file: TextIOWrapper):
             for t in team:
                 teams.append(t)
 
-        players = teams.copy()
+            team_line = file_data[1 + end_offset - team_c]
 
+        players = teams.copy()
+        
 
     elif "[Client thread/INFO]: [CHAT] Team #1: " in line:
         time.sleep(0.3)
