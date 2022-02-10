@@ -98,6 +98,8 @@ def extract(line: str, file: TextIOWrapper):
         team_c = 0
         teams = []
 
+        team_line = file_data[end_offset]
+
         while "[Client thread/INFO]: [CHAT] Team #" in team_line:
             team_c += 1
 
