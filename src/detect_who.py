@@ -32,6 +32,106 @@ def follow(thefile: TextIOWrapper):
         yield line.replace("\n","")
 
 
+def extract(line: str, file: TextIOWrapper):
+
+    players = []
+    found = True
+
+    if "[Client thread/INFO]: [CHAT] ONLINE: " in line:
+        msg = line.split("ONLINE: ")[1]
+        players = msg.split(", ")
+        
+
+    elif "[Client thread/INFO]: [CHAT] Team #1 - " in line:
+        time.sleep(0.3)
+        file.seek(0)
+
+        file_data = file.readlines()[::-1]
+        temp = []
+        for l in file_data:
+            temp.append(l.replace("\n",""))
+        file_data = temp.copy()
+
+        line_c = len(file_data)
+
+        end_offset = 0
+
+        while not "[Client thread/INFO]: [CHAT] Team #1" in file_data[end_offset]:
+            end_offset += 1
+        
+        team_c = 0
+        teams = []
+
+        team_line = file_data[end_offset]
+
+        while "[Client thread/INFO]: [CHAT] Team #" in team_line:
+            team_c += 1
+
+            team_line = file_data[-team_c+end_offset]
+
+            print(team_line)
+
+            team = team_line.split(" - [")[1].split("]")[0]
+
+            if ", " in team:
+                team = team.split(", ")
+
+            for t in team:
+                teams.append(t)
+
+        players = teams.copy()
+
+
+    elif "[Client thread/INFO]: [CHAT] Team #1: " in line:
+        time.sleep(0.3)
+        file.seek(0)
+
+        file_data = file.readlines()[::-1]
+        temp = []
+        for l in file_data:
+            temp.append(l.replace("\n",""))
+        file_data = temp.copy()
+
+        line_c = len(file_data)
+
+        end_offset = 0
+
+        while not "[Client thread/INFO]: [CHAT] Team #1: " in file_data[end_offset]:
+            end_offset += 1
+        
+        team_c = 0
+        teams = []
+
+        team_line = file_data[end_offset]
+
+        while "[Client thread/INFO]: [CHAT] Team #" in team_line:
+            team_c += 1
+
+            team_line = file_data[team_c+end_offset-1]
+
+            print(team_line)
+
+            team = team_line.split(": ")[1]
+
+            if ", " in team:
+                team = team.split(", ")
+
+            for t in team:
+                teams.append(t)
+
+        players = teams.copy()
+
+
+    else:
+        found = False
+
+    if found:
+        if " [x" in players[len(players)-1]:
+            players[len(players)-1] = players[len(players)-1].split(" [x")[0]
+
+    return found, players
+
+
 def main(client = "default", mc_version = ""):
 
     """
@@ -48,16 +148,8 @@ def main(client = "default", mc_version = ""):
     with open(get_log(client, mc_version)[1],"r") as f:
         g = follow(f)
         for gg in g:
+
+            found, players = extract(gg, f)
             
-            if "[Client thread/INFO]: [CHAT] ONLINE: " in gg:
-                msg = gg.split("ONLINE: ")[1]
-                players = msg.split(", ")
-                if " [x" in players[len(players)-1]:
-                    players[len(players)-1] = players[len(players)-1].split(" [x")[0]
+            if found:
                 yield players
-
-
-if __name__ == "__main__":
-    g = main("lunar", "1.8")
-    for gg in g:
-        print(gg)
