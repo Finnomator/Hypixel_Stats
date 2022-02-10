@@ -51,8 +51,6 @@ def extract(line: str, file: TextIOWrapper):
             temp.append(l.replace("\n",""))
         file_data = temp.copy()
 
-        line_c = len(file_data)
-
         end_offset = 0
 
         while not "[Client thread/INFO]: [CHAT] Team #1" in file_data[end_offset]:
@@ -66,8 +64,6 @@ def extract(line: str, file: TextIOWrapper):
         while "[Client thread/INFO]: [CHAT] Team #" in team_line:
             team_c += 1
 
-            print(team_line)
-
             team = team_line.split(" - [")[1].split("]")[0]
 
             if ", " in team:
@@ -79,7 +75,7 @@ def extract(line: str, file: TextIOWrapper):
             else:
                 teams.append(team)
 
-            team_line = file_data[1 + end_offset - team_c]
+            team_line = file_data[end_offset - team_c]
 
         players = teams.copy()
         
@@ -94,24 +90,18 @@ def extract(line: str, file: TextIOWrapper):
             temp.append(l.replace("\n",""))
         file_data = temp.copy()
 
-        line_c = len(file_data)
-
         end_offset = 0
 
-        while not "[Client thread/INFO]: [CHAT] Team #1" in file_data[end_offset]:
+        while not "[Client thread/INFO]: [CHAT] Team #1: " in file_data[end_offset]:
             end_offset += 1
         
         team_c = 0
         teams = []
 
-        team_line = file_data[end_offset]
-
         while "[Client thread/INFO]: [CHAT] Team #" in team_line:
             team_c += 1
 
-            print(team_line)
-
-            team = team_line.split(" - [")[1].split("]")[0]
+            team = team_line.split("[CHAT] Team #"+str(team_c)+": ")[1]
 
             if ", " in team:
                 team = team.split(", ")
@@ -122,7 +112,7 @@ def extract(line: str, file: TextIOWrapper):
             else:
                 teams.append(team)
 
-            team_line = file_data[1 + end_offset - team_c]
+            team_line = file_data[end_offset - team_c]
 
         players = teams.copy()
 

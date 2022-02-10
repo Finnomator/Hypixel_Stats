@@ -2,8 +2,6 @@
 
 This collects all player names of the players who are playing in your Hypixel round (e.g. Bedwars, SkyWars, ...) and collects all their data using the Hyixel api, filters it and prints it into the console.
 
-# <span style="color: #FF0000">This only works for Bedwars yet!</span>
-
 # Usage
 
 - Run main.py in terminal or run `run.bat` if you use Windows
