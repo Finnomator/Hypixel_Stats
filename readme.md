@@ -6,7 +6,7 @@ This collects all player names of the players who are playing in your Hypixel ro
 
 # Usage
 
-- Run main.py in terminal
+- Run main.py in terminal or run `run.bat` if you use Windows
 - Enter your Hypixel api key (you can optain it by using /key on the server)
 - Enter the launcher you are using (The default and Lunarclient are supported)
 - Enter the minecraft version you are using (if asked)
@@ -14,18 +14,18 @@ This collects all player names of the players who are playing in your Hypixel ro
 
 ## Important
 
-By default the results will be printed filtered by ```filters.json``` you can/should change that to your own preferences.
+By default the results will be printed filtered by `filters.json` you can/should change that to your own preferences.
 
 ### The filter
 
 #### Introduction
 
 The Hypixel api returns a very huge and confusing string of data for what reason it was necessary to filter the result. The filter is setup in a way it can be changed easley.
-The filter is stored in ```src/filters.json```.
+The filter is stored in `src/filters.json`.
 
 #### Changing the filter
 
-You change the filter by editing ```src/filters.json``` as described below.  
+You change the filter by editing `src/filters.json` as described below.  
 
 Looking at an example:  
 With this data we want to filter (this is how a api response of the player XXX could look like):
@@ -140,4 +140,4 @@ XXX:
  | 
 ```
 
-For the key names you can have a look at [```example_response.json```](example_resoponse.json)
+For the key names you can have a look at [`example_response.json`](example_resoponse.json)

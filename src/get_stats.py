@@ -21,7 +21,7 @@ def get_data(**kwargs) -> dict:
 
     try:
         return json.loads(res)
-    except json.JSONDecodeError:
+    except (json.JSONDecodeError, KeyError):
         raise HypixelAPIError("Player not found in hypixel api")
 
 def getuuid(name):
@@ -29,7 +29,7 @@ def getuuid(name):
     r = requests.get(url).text
     try:
         return json.loads(r)["id"]
-    except json.JSONDecodeError:
+    except (json.JSONDecodeError, KeyError):
         raise MojangAPIError("Player not found in mojang api")
 
 def get_stats(**kwargs) -> dict:
