@@ -112,16 +112,5 @@ def main(data: dict, data_filter: dict, remove_unnecessary_keys = True):
     return filter_obj
 
 
-if __name__ == "__main__":
 
     # Yes this code is ( ﾉ ﾟｰﾟ)ﾉ
-
-    with open("ex.json", "r") as f:
-        real_data = json.load(f)
-
-    with open("filters.json", "r") as f:
-        filter_data = json.load(f)
-
-    
-
-    print(json.dumps(main(real_data, filter_data, False), indent=4))

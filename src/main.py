@@ -85,7 +85,7 @@ while True:
             for player in tqdm(players_to_search):
 
                 if left_requests == 0:
-                    print("Out of requests, please wait 60 secs")
+                    print("Out of requests, please wait 60s")
                     break
 
                 try:
