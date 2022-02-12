@@ -142,11 +142,23 @@ def main(client = "default", mc_version = ""):
     if client != "default" and mc_version == "":
         raise Exception("mc_version must be give if the client is not \"default\" as string (e.g. \"1.8\" or \"1.16\")")
 
-    with open(get_log(client, mc_version)[1],"r") as f:
-        g = follow(f)
-        for gg in g:
+    developer_mode = True  # change it to True for dev mode
+    if not developer_mode:
+        with open(get_log(client, mc_version)[1],"r") as f:
+            g = follow(f)
+            for gg in g:
 
-            found, players = extract(gg, f)
-            
-            if found:
-                yield players
+                found, players = extract(gg, f)
+
+                if found:
+                    yield players
+    else:
+        name_list = []
+        while True:
+            name = input("Sample names: ")
+            if name == "":
+                break
+            else:
+                name_list.append(name)
+
+        yield name_list
