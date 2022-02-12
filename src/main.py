@@ -101,7 +101,7 @@ while True:
 
                 left_requests -= 1
 
-            filtered_obj = dict(sorted(filtered_obj.items(), key=lambda item: (item[1]["stats"]["Bedwars"]["Overall"]["Experience"])))
+            filtered_obj = dict(sorted(filtered_obj.items(), key=lambda item: (item[1]["Overall"]["networkExp"])))
                 
             extracted_obj = extract_for_mode.extract(filtered_obj)
 
