@@ -19,7 +19,7 @@ def extract(data: dict):
         if isinstance(player_data, dict):
             break
 
-        if i == len(data)-1:
+        if i == len(list(data.keys()))-1:
             return data
     
     mode = get_mode(player_data)

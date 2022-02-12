@@ -1,4 +1,9 @@
 {
+    "Overall": [
+        "networkExp",
+        "karma",
+        "firstLogin"
+    ],
     "stats": {
         "Bedwars": {
             "Overall": [
@@ -51,6 +56,9 @@
             ]
         },
         "Arcade": {
+            "Overall": [
+                "coins"
+            ],
             "Pixel Party": [
                 "wins_party"
             ]
