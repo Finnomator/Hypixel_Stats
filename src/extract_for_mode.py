@@ -2,7 +2,7 @@ def get_mode(player_data: dict):
 
     for key in player_data:
 
-        if "mostRecentGameType" in player_data[key]:
+        if "mostRecentGameType" in player_data[key] and player_data[key] != None:
 
             return player_data[key]["mostRecentGameType"]
 

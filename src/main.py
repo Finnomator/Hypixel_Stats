@@ -1,7 +1,8 @@
 from datetime import datetime
 import json
+import sys
 from threading import Thread
-from os import system
+import os
 from tqdm import tqdm
 import get_stats
 import detect_who
@@ -23,6 +24,17 @@ mc_client = infos["client"]
 
 
 detector = detect_who.main(mc_client, mc_version)
+
+
+def log_exception(exception: str):
+
+    with open("log.json", "r") as f:
+        log_data = json.load(f)
+
+    log_data.update({str(datetime.now()): str(exception)})
+
+    with open("log.json", "w") as f:
+        json.dump(log_data, f, indent=4)
 
 
 def update_infos(data: dict):
@@ -47,14 +59,15 @@ def reset_left_requests(stop):
             update_infos(
                 {"request": {"left_requests": 120, "last_request": min_now}})
 
-        time.sleep(1)
+        time.sleep(5)
 
 
 def pretty_format(data):
 
     data_formatted = json.dumps(data, indent=4)
 
-    res = data_formatted.replace("{","").replace("}","").replace('"',"").replace(",","").replace("\n    ","\n").replace("    "," | ")
+    res = data_formatted.replace("{", "").replace("}", "").replace(
+        '"', "").replace(",", "").replace("\n    ", "\n").replace("    ", " | ")
 
     return res
 
@@ -72,7 +85,7 @@ while True:
     try:
         for detect in detector:
 
-            system("cls")
+            os.system("cls")
 
             print("Searching...")
 
@@ -113,7 +126,22 @@ while True:
             print("\nUse /who to refresh")
 
         time.sleep(0.1)
+
     except KeyboardInterrupt:
+        print("Stopping...")
         stop_thread = True
         t1.join()
         exit()
+
+    except Exception as e:
+
+        e_msg = ""
+        unwichtig, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+
+        e_msg += "In "+str(fname)
+        e_msg += "Line: "+str(exc_tb.tb_lineno)
+        e_msg += str(e)
+
+        print("An exception occurred: " + str(e))
+        log_exception(e_msg)
