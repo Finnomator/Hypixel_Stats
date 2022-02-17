@@ -11,8 +11,34 @@ valid_versions = []
 
 home = str(Path.home()) + "/"
 
-with open("info.json", "r") as f:
-    infos = json.load(f)
+
+def _repair_infos():
+
+    print("info.json got corrupted, repairing...")
+
+    with open("saved_data/backup_info.json", "r") as f:
+        backup_info = json.load(f)
+
+    with open("info.json", "w") as f:
+        json.dump(backup_info, f, indent=4)
+
+    print("Reparation was succesful")
+
+    return backup_info
+
+
+try:
+    with open("info.json", "r") as f:
+        infos = json.load(f)
+
+except json.decoder.JSONDecodeError:
+    infos = _repair_infos()
+
+
+def _backup_infos():
+
+    with open("saved_data/backup_info.json", "w") as f:
+        json.dump(infos, f, indent=4)
 
 
 def get_vaild_versions():
@@ -137,6 +163,8 @@ def main():
     get_vaild_versions()
 
     infos = get_version()
+
+    _backup_infos()
 
 
 if __name__ == "__main__":

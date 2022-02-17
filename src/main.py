@@ -64,6 +64,13 @@ stop_thread = False
 t1 = Thread(target=reset_left_requests, args=(lambda: stop_thread, ))
 t1.start()
 
+print()
+print("#"*100)
+print("IMPORTANT: Always make sure that only one instance of this program is running!!!")
+print("Even if an exception got raised the program will remain running.")
+print("To close an instance just close the terminal.")
+print("#"*100)
+print()
 
 while True:
 
