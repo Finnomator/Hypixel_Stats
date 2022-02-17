@@ -6,6 +6,8 @@ import json
 
 def process_player_data(player, **kwargs):
 
+    filtered = {}
+
     with open("process/filters.json", "r") as f:
         data_filter = json.load(f)
 
@@ -14,10 +16,10 @@ def process_player_data(player, **kwargs):
         filtered = filter_data.main(data, data_filter, False)
 
     except get_stats.MojangAPIError:
-        filtered.update({player: "Not found in Mojang API"})
+        filtered = "Not found in Mojang API"
 
     except get_stats.HypixelAPIError:
-        filtered.update({player: "Not found in Hypixel API"})
+        filtered = "Not found in Hypixel API"
 
     return filtered
 
