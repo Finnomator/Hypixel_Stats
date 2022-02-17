@@ -19,11 +19,11 @@ By default the results will be printed filtered by `filters.json` you can/should
 #### Introduction
 
 The Hypixel api returns a very huge and confusing string of data for what reason it was necessary to filter the result. The filter is setup in a way it can be changed easley.
-The filter is stored in `src/filters.json`.
+The filter is stored in `src/process/filters.json`.
 
 #### Changing the filter
 
-You change the filter by editing `src/filters.json` as described below.  
+You change the filter by editing `src/process/filters.json` as described below.  
 
 Looking at an example:  
 With this data we want to filter (this is how a api response of the player XXX could look like):

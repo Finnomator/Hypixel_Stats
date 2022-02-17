@@ -1,12 +1,12 @@
 import get_stats
-import filter_data
-import extract_for_mode
+import process.filter_data as filter_data
+import process.extract_for_mode as extract_for_mode
 import json
 
 
 def process_player_data(player, **kwargs):
 
-    with open("filters.json", "r") as f:
+    with open("process/filters.json", "r") as f:
         data_filter = json.load(f)
 
     try:

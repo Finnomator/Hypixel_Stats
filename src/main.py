@@ -6,7 +6,7 @@ import os
 from tqdm import tqdm
 import detect_who
 import mc_setup
-import process_data
+import process.process_data as process_data
 import time
 
 players_to_search = []

@@ -22,6 +22,20 @@ def extract(data: dict):
         if i == len(list(data.keys()))-1:
             return data
 
+    for i, p in enumerate(data):
+
+        found = False
+
+        for key in data[p]:
+            if "mostRecentGameType" in data[p][key]:
+                if data[p][key]["mostRecentGameType"] != None:
+                    player_data = data[p].copy()
+                    found = True
+                    break
+
+        if found:
+            break
+
     mode = get_mode(player_data)
 
     if mode == None:
