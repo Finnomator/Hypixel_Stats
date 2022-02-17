@@ -21,17 +21,17 @@ def extract(data: dict):
 
         if i == len(list(data.keys()))-1:
             return data
-    
+
     mode = get_mode(player_data)
 
     if mode == None:
         return data
 
     for player_name in data:
-        try: 
+        try:
             for mode_in_data in data[player_name]["stats"]:
 
-                if mode_in_data.lower().replace("_","") == mode.lower().replace("_",""):
+                if mode_in_data.lower().replace("_", "") == mode.lower().replace("_", ""):
 
                     extracted_data[player_name] = data[player_name]["stats"][mode_in_data]
 

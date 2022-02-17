@@ -65,10 +65,10 @@ def filterit(data, filter_data):
 
 def dict_depth(my_dict):
     if isinstance(my_dict, dict):
-          
+
         return 1 + (max(map(dict_depth, my_dict.values()))
-                                    if my_dict else 0)
-          
+                    if my_dict else 0)
+
     return 0
 
 
@@ -97,7 +97,7 @@ def con_to_dct(filter):
     return res
 
 
-def main(data: dict, data_filter: dict, remove_unnecessary_keys = True):
+def main(data: dict, data_filter: dict, remove_unnecessary_keys=True):
 
     if list(data.keys()) == ["success", "player"]:
         data = data["player"]
@@ -110,7 +110,5 @@ def main(data: dict, data_filter: dict, remove_unnecessary_keys = True):
         filter_obj = remove_upper(filter_obj)
 
     return filter_obj
-
-
 
     # Yes this code is ( ﾉ ﾟｰﾟ)ﾉ

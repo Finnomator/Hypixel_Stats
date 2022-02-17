@@ -4,16 +4,14 @@ import sys
 from threading import Thread
 import os
 from tqdm import tqdm
-import get_stats
 import detect_who
-import setup
-import filter_data
-import extract_for_mode
+import mc_setup
+import process_data
 import time
 
 players_to_search = []
 
-setup.main()
+mc_setup.main()
 
 with open("info.json", "r") as f:
     infos = json.load(f)
@@ -62,26 +60,15 @@ def reset_left_requests(stop):
         time.sleep(5)
 
 
-def pretty_format(data):
-
-    data_formatted = json.dumps(data, indent=4)
-
-    res = data_formatted.replace("{", "").replace("}", "").replace(
-        '"', "").replace(",", "").replace("\n    ", "\n").replace("    ", " | ")
-
-    return res
-
-
 stop_thread = False
 t1 = Thread(target=reset_left_requests, args=(lambda: stop_thread, ))
 t1.start()
 
-with open("filters.json", "r") as f:
-    data_filter = json.load(f)
-
-print("Ready, use /who in game")
 
 while True:
+
+    print("Ready, use /who in game")
+
     try:
         for detect in detector:
 
@@ -89,41 +76,30 @@ while True:
 
             print("Searching...")
 
-            filtered_obj = {}
+            players_data = {}
 
             left_requests = infos["request"]["left_requests"]
 
-            players_to_search = detect
-
-            for player in tqdm(players_to_search):
+            for player in tqdm(detect):
 
                 if left_requests == 0:
                     print("Out of requests, please wait 60s")
                     break
 
-                try:
-                    data = get_stats.get_stats(key=api_key, name=player)
-                    filtered = filter_data.main(data, data_filter, False)
-                    filtered_obj.update({player: filtered})
-
-                except get_stats.MojangAPIError:
-                    filtered_obj.update({player: "Not found in Mojang API"})
-
-                except get_stats.HypixelAPIError:
-                    filtered_obj.update({player: "Not found in Hypixel API"})
+                processed_player_data = process_data.process_player_data(
+                    player, key=api_key, name=player)
+                players_data.update({player: processed_player_data})
 
                 left_requests -= 1
 
-            extracted_obj = extract_for_mode.extract(filtered_obj)
+            extracted_player_data = process_data.extract(players_data)
 
-            pretty_res = pretty_format(extracted_obj)
-
-            print(pretty_res)
+            pretty_res = process_data.pretty_format(extracted_player_data)
 
             infos = update_infos(
                 {"request": {"left_requests": left_requests, "last_request": datetime.now().minute}})
 
-            print("\nUse /who to refresh")
+            print(pretty_res)
 
         time.sleep(0.1)
 
@@ -139,9 +115,11 @@ while True:
         unwichtig, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
 
-        e_msg += "In "+str(fname)
-        e_msg += "Line: "+str(exc_tb.tb_lineno)
+        e_msg += str(fname)
+        e_msg += " (l."+str(exc_tb.tb_lineno)+"): "
         e_msg += str(e)
 
         print("An exception occurred: " + str(e))
+        print("See src/log.json for more information")
+        print("If this error occurres again please report it on https://github.com/Finnomator/Hypixel_Stats/issues")
         log_exception(e_msg)
