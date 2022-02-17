@@ -33,7 +33,14 @@ def extract(data: dict):
 
                 if mode_in_data.lower().replace("_", "") == mode.lower().replace("_", ""):
 
-                    extracted_data[player_name] = data[player_name]["stats"][mode_in_data]
+                    if "Overall" in data[player_name]:
+                        extracted_data.update(
+                            {player_name: {"Overall": data[player_name]["Overall"], mode_in_data: data[player_name]["stats"][mode_in_data]}})
+
+                    else:
+                        extracted_data.update(
+                            {player_name: {mode_in_data: data[player_name]["stats"][mode_in_data]}})
+                    break
 
         except TypeError:
             extracted_data[player_name] = data[player_name]
