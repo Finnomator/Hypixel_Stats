@@ -9,8 +9,6 @@ import mc_setup
 import process.process_data as process_data
 import time
 
-players_to_search = []
-
 mc_setup.main()
 
 with open("info.json", "r") as f:
@@ -20,6 +18,7 @@ api_key = infos["api_key"]
 mc_version = infos["mc_version"]
 mc_client = infos["client"]
 
+corrupted_info = False
 
 detector = detect_who.main(mc_client, mc_version)
 
@@ -37,8 +36,28 @@ def log_exception(exception: str):
 
 def update_infos(data: dict):
 
-    with open("info.json", "r") as f:
-        old = json.load(f)
+    try:
+        with open("info.json", "r") as f:
+            old = json.load(f)
+    except json.decoder.JSONDecodeError:
+
+        global corrupted_info
+
+        corrupted_info = True
+
+        print()
+        print("ERROR:")
+        print("info.json got corrupted")
+        print("This is most likely because multiple instances of this program were running")
+        print("Please close all instances and restart the program")
+
+        for i in range(30)[::-1]:
+            print("This instance will close itself in " +
+                  str(i)+" seconds! ", end="\r")
+
+            time.sleep(1)
+
+        os._exit(1)
 
     old.update(data)
 
@@ -78,6 +97,9 @@ while True:
 
     try:
         for detect in detector:
+
+            if corrupted_info:
+                continue
 
             os.system("cls")
 
