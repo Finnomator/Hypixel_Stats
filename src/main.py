@@ -7,8 +7,9 @@ import detect_who
 import mc_setup
 import process.process_data as process_data
 import time
+import traceback
 
-mc_setup.main()
+#mc_setup.main()
 
 with open("info.json", "r") as f:
     infos = json.load(f)
@@ -106,15 +107,8 @@ while True:
 
     except Exception as e:
 
-        e_msg = ""
-        _, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-
-        e_msg += str(fname)
-        e_msg += " (l."+str(exc_tb.tb_lineno)+"): "
-        e_msg += str(e)
-
         print("An exception occurred: " + str(e))
         print("Check src/log.json for more information")
         print("If this error occurres again please report it on https://github.com/Finnomator/Hypixel_Stats/issues")
-        log_exception(e_msg)
+        print()
+        log_exception(str(traceback.format_exc()))
